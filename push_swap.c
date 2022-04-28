@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/04/18 23:10:17 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/04/24 00:40:47 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,55 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 	*lst = new;
 }
 
+void	sort_3(t_list **stack)
+{
+	int		min;
+	int		max;
+	t_list	*temp;
+
+	temp = *stack;
+	min = get_min(*stack);
+	max = get_max(*stack);
+	if (temp->next->content == min && ft_lstlast(temp)->content == max)
+		swap(*stack);
+	else if (temp->content == max && ft_lstlast(temp)->content == min)
+	{
+		swap(*stack);
+		reverse_rotate(stack);
+	}
+	else if (temp->content == max && temp->next->content == min)
+		rotate(stack);
+	else if (temp->content == min && temp->next->content == max)
+	{
+		swap(*stack);
+		rotate(stack);
+	}
+	else if (temp->next->content == max && ft_lstlast(temp)->content == min)
+		reverse_rotate(stack);
+	else
+		return ;
+}
+
+void	sort_5(t_list **stack_a, t_list **stack_b)
+{
+	t_list	*min;
+	t_list	*max;
+	// printf("im here");
+	min->content = get_min(*stack_a);
+	max->content = get_max(*stack_a);
+	min->next = NULL;
+	max->next = NULL;
+	push(stack_a, stack_b);
+	push(stack_a, stack_b);
+	sort_3(stack_a);
+	push(stack_b, stack_a);
+	rotate(stack_a);
+	push(stack_b, stack_a);
+	//printf("%d, %d\n", (*min)->content, (*max)->content);
+	// printf("%d, %d\n", (*stack_b)->content, (*stack_b)->next->content);
+	
+}
+
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
 	t_list	*last;
@@ -116,14 +165,31 @@ int main(int argc, char **argv)
 		ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
 		i++;
 	}
-	reverse_rotate(&stack_a);
-	i = 1;
-	printf("new head: %d\n", stack_a->content);
-	while (stack_a->next != NULL)
+	//swap(stack_a);
+	//reverse_rotate(&stack_a);
+	mapping(stack_a, stack_b);
+	// printf("%d\n", stack_a->content);
+	// printf("%d\n", stack_a->next->content);
+	// printf("%d\n", stack_a->next->next->content);
+	// stack_b = stack_a;
+	while (stack_b != NULL)
 	{
-		printf("%d\n", stack_a->content);
-		stack_a = stack_a->next;
+		printf("b: %d\n", stack_b->content);
+		stack_b = stack_b->next;
 	}
-	printf("%d\n", stack_a->content);
+	//swap(stack_a);
+	//printf("max: %d, min: %d\n", get_max(stack_a), get_min(stack_a));
+	// while (stack_a != NULL)
+	// {
+	// 	printf("a: %d\n", stack_a->content);
+	// 	stack_a = stack_a->next;
+	// }
+	// printf("a: %d\n", stack_a->content);
+	// while (stack_b->next != NULL)
+	// {
+	// 	printf("b: %d\n", stack_b->content);
+	// 	stack_b = stack_b->next;
+	// }
+	// printf("b: %d\n", stack_b->content);
     return (0);
 }

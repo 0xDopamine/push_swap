@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:43:32 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/04/18 23:10:31 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/04/24 00:39:11 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,8 @@ t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 void			swap (t_list *stack);
 void			rotate(t_list **stack);
 void			reverse_rotate(t_list **stack);
+void			push(t_list **from, t_list **to);
+int		get_min(t_list *stack);
+int		get_max(t_list *stack);
+void	mapping(t_list *stack_a, t_list *stack_b);
 #endif
