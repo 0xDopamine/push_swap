@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:43:32 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/04/24 00:39:11 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/05 19:00:57 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,4 +74,9 @@ void			push(t_list **from, t_list **to);
 int		get_min(t_list *stack);
 int		get_max(t_list *stack);
 void	mapping(t_list *stack_a, t_list *stack_b);
+int	ft_lstsize(t_list *lst);
+void	sort_3(t_list **stack);
+void	print_list(t_list *stack);
+int		get_min_index(t_list *stack);
+int		get_max_index(t_list *stack);
 #endif

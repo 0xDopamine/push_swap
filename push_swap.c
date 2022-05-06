@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/04/24 00:40:47 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/05 19:01:32 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@ int	ft_atoi(const char *str)
 	int		i;
 	long	res;
 	int		sign;
-	long	temp;
 
 	sign = 1;
 	res = 0;
 	i = 0;
-	temp = 0;
 	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
 		i++;
 	if (str[i] && (str[i] == '+' || str[i] == '-'))
@@ -165,31 +163,17 @@ int main(int argc, char **argv)
 		ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
 		i++;
 	}
+	//print_list(stack_a);
 	//swap(stack_a);
 	//reverse_rotate(&stack_a);
 	mapping(stack_a, stack_b);
-	// printf("%d\n", stack_a->content);
-	// printf("%d\n", stack_a->next->content);
-	// printf("%d\n", stack_a->next->next->content);
-	// stack_b = stack_a;
-	while (stack_b != NULL)
-	{
-		printf("b: %d\n", stack_b->content);
-		stack_b = stack_b->next;
-	}
-	//swap(stack_a);
-	//printf("max: %d, min: %d\n", get_max(stack_a), get_min(stack_a));
-	// while (stack_a != NULL)
-	// {
-	// 	printf("a: %d\n", stack_a->content);
-	// 	stack_a = stack_a->next;
-	// }
-	// printf("a: %d\n", stack_a->content);
-	// while (stack_b->next != NULL)
+	// while (stack_b != NULL)
 	// {
 	// 	printf("b: %d\n", stack_b->content);
 	// 	stack_b = stack_b->next;
 	// }
-	// printf("b: %d\n", stack_b->content);
+	//swap(stack_a);
+	//printf("max: %d, min: %d\n", get_max(stack_a), get_min(stack_a));
+	// printf("a: %d\n", stack_a->content);
     return (0);
 }
