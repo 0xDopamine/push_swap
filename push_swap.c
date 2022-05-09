@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/05 19:01:32 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/08 18:05:11 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,24 +114,31 @@ void	sort_3(t_list **stack)
 		return ;
 }
 
-void	sort_5(t_list **stack_a, t_list **stack_b)
+void	sort_5(t_list *stack_a, t_list *stack_b)
 {
-	t_list	*min;
-	t_list	*max;
-	// printf("im here");
-	min->content = get_min(*stack_a);
-	max->content = get_max(*stack_a);
-	min->next = NULL;
-	max->next = NULL;
-	push(stack_a, stack_b);
-	push(stack_a, stack_b);
-	sort_3(stack_a);
-	push(stack_b, stack_a);
-	rotate(stack_a);
-	push(stack_b, stack_a);
-	//printf("%d, %d\n", (*min)->content, (*max)->content);
-	// printf("%d, %d\n", (*stack_b)->content, (*stack_b)->next->content);
-	
+	int		i;
+	t_list	*tmp;
+
+	i = 1;
+	tmp = stack_a;
+	//printf("---------------\n");
+	//print_list(tmp);
+	while (tmp != NULL)
+	{
+		//printf("---------------\n");
+		if (tmp->content == get_max(tmp))
+		{
+			push(&tmp, &stack_b);
+			break ;
+		}
+		tmp = tmp->next;
+		i++;
+	}
+	//stack_a = tmp;
+	//sort_3(&stack_a);
+	//push(&stack_b, &stack_a);
+	//push(&stack_b, &stack_a);
+	//rotate(&stack_a);
 }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)

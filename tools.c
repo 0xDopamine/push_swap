@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:07:17 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/06 18:55:56 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/09 18:03:47 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,50 +119,30 @@ void    swap(t_list *stack)
 
 void	mapping(t_list *stack_a, t_list *stack_b)
 {
-	int	max;
 	int	min;
 	int	i;
-	t_list	*tmp;
+	int	max;
 
-	i = 1;
-	//tmp = NULL;
 	max = get_max_index(stack_a);
+	i = 1;
 	min = get_min_index(stack_a);
-	printf("max: %d\nmin: %d\n", get_max_index(stack_a), get_min_index(stack_a));
-	while (stack_a != NULL)
+	if (min < ft_lstsize(stack_a) / 2)
+		while (i++ < min)
+			rotate(&stack_a);
+	else
+		while (min++ <= ft_lstsize(stack_a))
+			reverse_rotate(&stack_a);
+	push(&stack_a, &stack_b);
+	if (ft_lstsize(stack_a) == 3)
 	{
-		// printf("current node: %d\n", stack_a->content);
-		// printf("before push %d\n", i);
-		printf("a: \n");
+		sort_3(&stack_a);
+		push(&stack_b, &stack_a);
+		push(&stack_b, &stack_a);
 		print_list(stack_a);
-		printf("---------------\n");
-		// printf("b: \n");
-		// //print_list(stack_b);
-		// printf("---------------\n");
-		if (i == get_max_index(stack_a))
-			push(&stack_a, &stack_b);
-		else if (i == get_min_index(stack_a))
-			push(&stack_a, &stack_b);
-		//printf("b size: %d in: %d\n", ft_lstsize(stack_a), i);
-		// printf("after push %d\n", i);
-		// print_list(stack_a);
-		// printf("---------------\n");
-		// printf("b: \n");
-		// printf("---------------\n");
-		//ft_lstadd_back(&stack_a, tmp);
-		if (ft_lstsize(stack_b) == 2)
-			break ;
-		stack_a = stack_a->next;
-		i++;
-		//print_list(tmp);
+		return ;
 	}
-	print_list(stack_a);
-	printf("---------------\n");
-	sort_3(&stack_a);
-	push(&stack_b, &stack_a);
-	push(&stack_b, &stack_a);
-	rotate(&stack_a);
-	print_list(stack_a);
+	else
+		mapping(stack_a, stack_b);
 }
 
 void    rotate(t_list **stack)
