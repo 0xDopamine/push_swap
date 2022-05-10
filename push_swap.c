@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/08 18:05:11 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/10 21:59:01 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,76 @@ void	sort_5(t_list *stack_a, t_list *stack_b)
 	//push(&stack_b, &stack_a);
 	//rotate(&stack_a);
 }
+void	print_arr(int *arr, int size)
+{
+	int	i;
+
+	i = 0;
+	while (i < size)
+	{
+		printf("%d\n", arr[i]);
+		i++;
+	}
+}
+
+void	bubble_sort(int *arr, int size)
+{
+	int	i;
+	int	j;
+	int	temp;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		j = 0;
+		while (j < size - 1)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+			j++;
+		}
+		i++;
+	}
+}
+
+
+void	simplify_nums(t_list *stack)
+{
+	int	lst_size;
+	int	*arr;
+	int	i;
+	int	j;
+	int	*temp;
+
+	i = 0;
+	lst_size = ft_lstsize(stack);
+	arr = malloc(sizeof(int) * lst_size);
+	temp = malloc(sizeof(int) * lst_size);
+	while (stack)
+	{
+		arr[i] = stack->content;
+		temp[i] = arr[i];
+		i++;
+		stack = stack->next;
+	}
+	bubble_sort(temp, lst_size);
+	i = 0;
+	while (i < lst_size)
+	{
+		j = 0;
+		while (j < lst_size)
+		{
+			if (arr[i] == temp[j])
+				arr[i] = j;
+			j++;
+		}
+		i++;
+	}
+}
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {
@@ -173,7 +243,8 @@ int main(int argc, char **argv)
 	//print_list(stack_a);
 	//swap(stack_a);
 	//reverse_rotate(&stack_a);
-	mapping(stack_a, stack_b);
+	//mapping(stack_a, stack_b);
+	simplify_nums(stack_a);
 	// while (stack_b != NULL)
 	// {
 	// 	printf("b: %d\n", stack_b->content);
