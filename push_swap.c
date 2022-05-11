@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/10 21:59:01 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/11 18:41:15 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,51 +95,25 @@ void	sort_3(t_list **stack)
 	min = get_min(*stack);
 	max = get_max(*stack);
 	if (temp->next->content == min && ft_lstlast(temp)->content == max)
-		swap(*stack, 'a');
+		swap(*stack, 'A');
 	else if (temp->content == max && ft_lstlast(temp)->content == min)
 	{
-		swap(*stack, 'a');
-		reverse_rotate(stack, 'a');
+		swap(*stack, 'A');
+		reverse_rotate(stack, 'A');
 	}
 	else if (temp->content == max && temp->next->content == min)
-		rotate(stack, 'a');
+		rotate(stack, 'A');
 	else if (temp->content == min && temp->next->content == max)
 	{
-		swap(*stack, 'a');
-		rotate(stack, 'a');
+		swap(*stack, 'A');
+		rotate(stack, 'A');
 	}
 	else if (temp->next->content == max && ft_lstlast(temp)->content == min)
-		reverse_rotate(stack, 'a');
+		reverse_rotate(stack, 'A');
 	else
 		return ;
 }
 
-void	sort_5(t_list *stack_a, t_list *stack_b)
-{
-	int		i;
-	t_list	*tmp;
-
-	i = 1;
-	tmp = stack_a;
-	//printf("---------------\n");
-	//print_list(tmp);
-	while (tmp != NULL)
-	{
-		//printf("---------------\n");
-		if (tmp->content == get_max(tmp))
-		{
-			push(&tmp, &stack_b, 'a');
-			break ;
-		}
-		tmp = tmp->next;
-		i++;
-	}
-	//stack_a = tmp;
-	//sort_3(&stack_a);
-	//push(&stack_b, &stack_a);
-	//push(&stack_b, &stack_a);
-	//rotate(&stack_a);
-}
 void	print_arr(int *arr, int size)
 {
 	int	i;
@@ -176,15 +150,25 @@ void	bubble_sort(int *arr, int size)
 	}
 }
 
+void	copytolist(int *arr, t_list *stack, int size)
+{
+	int	i;
 
-t_list	*simplify_nums(t_list *stack)
+	i = 0;
+	while (i < size - 1)
+	{
+		ft_lstadd_back(&stack, ft_lstnew(arr[i]));
+		i++;
+	}
+}
+
+int	*simplify_nums(t_list *stack)
 {
 	int	lst_size;
 	int	*arr;
 	int	i;
 	int	j;
 	int	*temp;
-	t_list	*new_stack;
 
 	i = 0;
 	lst_size = ft_lstsize(stack);
@@ -210,14 +194,7 @@ t_list	*simplify_nums(t_list *stack)
 		}
 		i++;
 	}
-	i = 0;
-	while (i < lst_size - 1)
-	{
-		new_stack->content = arr[i];
-		new_stack = new_stack->next;
-		i++;
-	}
-	return(new_stack);
+	return(arr);
 }
 
 void	big_sort(t_list *stack_a, t_list *stack_b)
@@ -228,13 +205,14 @@ void	big_sort(t_list *stack_a, t_list *stack_b)
 	int	i;
 	int	*arr;
 	int	j;
-	t_list	*stack;
+	int	num;
 
 	i = 0;
-	stack = simplify_nums(stack_a);
+	arr = simplify_nums(stack_a);
 	max_bits = 0;
 	size = ft_lstsize(stack_a);
 	max = size - 1;
+	copytolist(arr, stack_a, size);
 	while ((max >> max_bits) != 0)
 		++max_bits;
 	while (i < max_bits)
@@ -242,17 +220,17 @@ void	big_sort(t_list *stack_a, t_list *stack_b)
 		j = 0;
 		while (j < size)
 		{
-			int num = stack_a->content;
-			if ((num >> i)&1 == 1)
-				rotate(&stack_a, 'a');
+			num = stack_a->content;
+			if ((num >> i)&(1 == 1))
+				rotate(&stack_a, 'A');
 			else
-				push(&stack_a, &stack_b, 'a');
+				push(&stack_a, &stack_b, 'A');
 			j++;
 		}
 		i++;
 	}
-	while (stack_b != NULL)
-		push(&stack_b, &stack_a, 'b');
+	while (stack_b == NULL)
+		push(&stack_b, &stack_a, 'B');
 }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
@@ -275,27 +253,37 @@ int main(int argc, char **argv)
 	t_list	*stack_a;
 	int		i;
 	t_list	*stack_b;
+	char	**arg;
 
-	i = 1;
 	stack_a = NULL;
 	stack_b = NULL;
-	while (i < argc)
-	{
-		ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
-		i++;
-	}
-	//print_list(stack_a);
-	//swap(stack_a);
-	//reverse_rotate(&stack_a);
-	//mapping(stack_a, stack_b);
-	simplify_nums(stack_a);
-	// while (stack_b != NULL)
+	arg = NULL;
+	// printf("im here");
+	// if (argc == 2)
 	// {
-	// 	printf("b: %d\n", stack_b->content);
-	// 	stack_b = stack_b->next;
+	// 	i = 0;
+	// 	while (*arg[i])
+	// 	{
+	// 		//ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(arg[i])));
+	// 		i++;
+	// 	}
 	// }
-	//swap(stack_a);
-	//printf("max: %d, min: %d\n", get_max(stack_a), get_min(stack_a));
-	// printf("a: %d\n", stack_a->content);
+	// else
+	// {
+		i = 1;
+		while (i < argc)
+		{
+			ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
+			i++;
+		}
+	//}
+	if (argc == 6 || argc == 5)
+		mapping(stack_a, stack_b);
+	else if (argc == 4)
+		sort_3(&stack_a);
+	else if (argc > 6)
+		big_sort(stack_a, stack_b);
+	else
+		write(2, "Error\n", 6);
     return (0);
 }
