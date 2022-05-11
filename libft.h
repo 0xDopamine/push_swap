@@ -68,10 +68,10 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
 					void (*del)(void *));
 void	sort_5(t_list *stack_a, t_list *stack_b);
-void			swap (t_list *stack);
-void			rotate(t_list **stack);
-void			reverse_rotate(t_list **stack);
-void			push(t_list **from, t_list **to);
+void			swap (t_list *stack, char which);
+void			rotate(t_list **stack, char which);
+void			reverse_rotate(t_list **stack, char which);
+void			push(t_list **from, t_list **to, char which);
 int		get_min(t_list *stack);
 int		get_max(t_list *stack);
 void	mapping(t_list *stack_a, t_list *stack_b);

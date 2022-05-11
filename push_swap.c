@@ -95,21 +95,21 @@ void	sort_3(t_list **stack)
 	min = get_min(*stack);
 	max = get_max(*stack);
 	if (temp->next->content == min && ft_lstlast(temp)->content == max)
-		swap(*stack);
+		swap(*stack, 'a');
 	else if (temp->content == max && ft_lstlast(temp)->content == min)
 	{
-		swap(*stack);
-		reverse_rotate(stack);
+		swap(*stack, 'a');
+		reverse_rotate(stack, 'a');
 	}
 	else if (temp->content == max && temp->next->content == min)
-		rotate(stack);
+		rotate(stack, 'a');
 	else if (temp->content == min && temp->next->content == max)
 	{
-		swap(*stack);
-		rotate(stack);
+		swap(*stack, 'a');
+		rotate(stack, 'a');
 	}
 	else if (temp->next->content == max && ft_lstlast(temp)->content == min)
-		reverse_rotate(stack);
+		reverse_rotate(stack, 'a');
 	else
 		return ;
 }
@@ -128,7 +128,7 @@ void	sort_5(t_list *stack_a, t_list *stack_b)
 		//printf("---------------\n");
 		if (tmp->content == get_max(tmp))
 		{
-			push(&tmp, &stack_b);
+			push(&tmp, &stack_b, 'a');
 			break ;
 		}
 		tmp = tmp->next;
@@ -177,13 +177,14 @@ void	bubble_sort(int *arr, int size)
 }
 
 
-void	simplify_nums(t_list *stack)
+t_list	*simplify_nums(t_list *stack)
 {
 	int	lst_size;
 	int	*arr;
 	int	i;
 	int	j;
 	int	*temp;
+	t_list	*new_stack;
 
 	i = 0;
 	lst_size = ft_lstsize(stack);
@@ -209,6 +210,49 @@ void	simplify_nums(t_list *stack)
 		}
 		i++;
 	}
+	i = 0;
+	while (i < lst_size - 1)
+	{
+		new_stack->content = arr[i];
+		new_stack = new_stack->next;
+		i++;
+	}
+	return(new_stack);
+}
+
+void	big_sort(t_list *stack_a, t_list *stack_b)
+{
+	int	size;
+	int	max;
+	int	max_bits;
+	int	i;
+	int	*arr;
+	int	j;
+	t_list	*stack;
+
+	i = 0;
+	stack = simplify_nums(stack_a);
+	max_bits = 0;
+	size = ft_lstsize(stack_a);
+	max = size - 1;
+	while ((max >> max_bits) != 0)
+		++max_bits;
+	while (i < max_bits)
+	{
+		j = 0;
+		while (j < size)
+		{
+			int num = stack_a->content;
+			if ((num >> i)&1 == 1)
+				rotate(&stack_a, 'a');
+			else
+				push(&stack_a, &stack_b, 'a');
+			j++;
+		}
+		i++;
+	}
+	while (stack_b != NULL)
+		push(&stack_b, &stack_a, 'b');
 }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
