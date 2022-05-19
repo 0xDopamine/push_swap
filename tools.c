@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/15 21:07:17 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/11 18:38:58 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:22:01 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ int		get_min_index(t_list *stack)
 	int	i;
 
 	i = 1;
-	min_index = 1;
+	min_index = i;
 	min = stack->content;
 	while (stack != NULL)
 	{
@@ -177,10 +177,57 @@ int		get_min_index(t_list *stack)
 			min = stack->content;
 			min_index = i;
 		}
+		i++;
 		stack = stack->next;
+	}
+	//printf("min index: %d\nmin value: %d\n", min_index, min);
+	return (min_index);
+}
+
+int	*copytoarray(t_list *stack)
+{
+	int	size;
+	int	i;
+	int	*arr;
+
+	i = 0;
+	size = ft_lstsize(stack);
+	arr = (int *)malloc(sizeof(int) * size);
+	while (stack)
+	{
+		arr[i] = stack->content;
+		i++;
+		stack = stack->next;
+	}
+	return (arr);
+}
+
+int		issorted(int *arr, int size)
+{
+	int	i;
+	int	j;
+	int	temp;
+	int	test;
+
+	i = 0;
+	test = 1;
+	while (i < size - 1)
+	{
+		j = 0;
+		while (j < size - i - 1)
+		{
+			if (arr[j] > arr[j + 1])
+			{
+				temp = arr[j];
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+				test = 0;
+			}
+			j++;
+		}
 		i++;
 	}
-	return (min_index);
+	return (test);
 }
 
 int		get_max_index(t_list *stack)
@@ -240,39 +287,114 @@ void    swap(t_list *stack, char which)
 	temp = stack->content;
 	stack->content = stack->next->content;
 	stack->next->content = temp;
-	write (1, "S", 1);
-	if (which == 'B')
-		write (1, &which, 1);
+	if (which == 'b')
+		write (1, "sb", 2);
 	else
-		write (1, &which, 1);
+		write (1, "sa", 2);
 	write (1, "\n", 1);
 }
 
-void	mapping(t_list *stack_a, t_list *stack_b)
+int	check_dups(char *argv)
+{
+	char	temp;
+	int		i;
+	int		j;
+
+	i = 0;
+	while (argv[i])
+	{
+		j = 0;
+		temp = argv[i];
+		while (argv[j])
+		{
+			if (temp == argv[j])
+				return (0);
+			else
+				j++;
+		}
+		i++;
+	}
+	return (0);
+}
+
+int	checker(char *argv)
+{
+	int	i;
+	
+	i = 0;
+	while (argv[i])
+	{
+		if (argv[i] >= 48 && argv[i] <= 57)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	sort_4(t_list *stack_a, t_list *stack_b)
 {
 	int	min;
 	int	i;
-	int	max;
+	int	size;
 
-	max = get_max_index(stack_a);
-	i = 1;
 	min = get_min_index(stack_a);
-	if (min < (ft_lstsize(stack_a) / 2))
-		while (i++ < min)
-			rotate(&stack_a, 'A');
+	size = ft_lstsize(stack_a);
+	i = 1;
+	if (min > size / 2)
+	{
+		while (min++ <= size)
+			reverse_rotate(&stack_a, 'a');
+	}
 	else
-		while (min++ <= ft_lstsize(stack_a))
-			reverse_rotate(&stack_a, 'A');
-	push(&stack_a, &stack_b, 'A');
+		while (i++ < ft_lstsize(stack_a))
+		{
+			swap(stack_a, 'a');
+			if (get_min_index(stack_a) == 1)
+				break ;
+		}
+	push(&stack_a, &stack_b, 'b');
 	if (ft_lstsize(stack_a) == 3)
 	{
 		sort_3(&stack_a);
-		push(&stack_b, &stack_a, 'B');
-		push(&stack_b, &stack_a, 'B');
+		push(&stack_b, &stack_a, 'a');
+		push(&stack_b, &stack_a, 'a');
+		//print_list(stack_a);
 		return ;
 	}
 	else
-		mapping(stack_a, stack_b);
+		sort_5(stack_a, stack_b);
+}
+
+void	sort_5(t_list *stack_a, t_list *stack_b)
+{
+	int	min;
+	int	i;
+	int	size;
+
+	//stack_b = NULL;
+	i = 1;
+	size = ft_lstsize(stack_a);
+	min = get_min_index(stack_a);
+	if (min > size / 2)
+	{
+		while (min++ <= size)
+			reverse_rotate(&stack_a, 'a');
+	}
+	else
+		while (i++ < ft_lstsize(stack_a))
+		{
+			swap(stack_a, 'a');
+			if (get_min_index(stack_a) == 1)
+				break ;
+		}
+	push(&stack_a, &stack_b, 'b');
+	if (ft_lstsize(stack_a) == 4)
+	{
+		sort_4(stack_a, stack_b);
+		return ;
+	}
+	else
+		sort_5(stack_a, stack_b);
 }
 
 void    rotate(t_list **stack, char which)
@@ -283,11 +405,10 @@ void    rotate(t_list **stack, char which)
 	*stack = (*stack)->next;
 	temp->next = NULL;
 	ft_lstadd_back(stack, temp);
-	write (1, "R", 1);
-	if (which == 'B')
-		write (1, &which, 1);
+	if (which == 'b')
+		write (1, "rb", 2);
 	else
-		write (1, &which, 1);
+		write (1, "ra", 2);
 	write (1, "\n", 1);
 }
 
@@ -303,11 +424,10 @@ void    reverse_rotate(t_list **stack, char which)
 	temp1->next = *stack;
 	*stack = temp1; 
 	temp->next = NULL;
-	write (1, "RR", 2);
-	if (which == 'B')
-		write (1, &which, 1);
+	if (which == 'b')
+		write (1, "rrb", 3);
 	else
-		write (1, &which, 1);
+		write (1, "rra", 3);
 	write (1, "\n", 1);
 }
 
@@ -319,10 +439,9 @@ void    push(t_list **from, t_list **to, char which)
 	*from = (*from)->next;
 	temp->next = NULL;
 	ft_lstadd_front(to, temp);
-	write (1, "P", 1);
-	if (which == 'B')
-		write (1, &which, 1);
+	if (which == 'b')
+		write (1, "pb", 2);
 	else
-		write (1, &which, 1);
+		write (1, "pa", 2);
 	write (1, "\n", 1);
 }

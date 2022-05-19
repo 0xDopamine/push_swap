@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/11 18:41:15 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:22:33 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,21 +95,21 @@ void	sort_3(t_list **stack)
 	min = get_min(*stack);
 	max = get_max(*stack);
 	if (temp->next->content == min && ft_lstlast(temp)->content == max)
-		swap(*stack, 'A');
+		swap(*stack, 'a');
 	else if (temp->content == max && ft_lstlast(temp)->content == min)
 	{
-		swap(*stack, 'A');
-		reverse_rotate(stack, 'A');
+		swap(*stack, 'a');
+		reverse_rotate(stack, 'a');
 	}
 	else if (temp->content == max && temp->next->content == min)
-		rotate(stack, 'A');
+		rotate(stack, 'a');
 	else if (temp->content == min && temp->next->content == max)
 	{
-		swap(*stack, 'A');
-		rotate(stack, 'A');
+		swap(*stack, 'a');
+		rotate(stack, 'a');
 	}
 	else if (temp->next->content == max && ft_lstlast(temp)->content == min)
-		reverse_rotate(stack, 'A');
+		reverse_rotate(stack, 'a');
 	else
 		return ;
 }
@@ -136,7 +136,7 @@ void	bubble_sort(int *arr, int size)
 	while (i < size - 1)
 	{
 		j = 0;
-		while (j < size - 1)
+		while (j < size - i - 1)
 		{
 			if (arr[j] > arr[j + 1])
 			{
@@ -150,16 +150,18 @@ void	bubble_sort(int *arr, int size)
 	}
 }
 
-void	copytolist(int *arr, t_list *stack, int size)
+t_list	*copytolist(int *arr, int size)
 {
 	int	i;
+	t_list *stack;
 
 	i = 0;
-	while (i < size - 1)
+	while (i < size)
 	{
 		ft_lstadd_back(&stack, ft_lstnew(arr[i]));
 		i++;
 	}
+	return (stack);
 }
 
 int	*simplify_nums(t_list *stack)
@@ -178,10 +180,12 @@ int	*simplify_nums(t_list *stack)
 	{
 		arr[i] = stack->content;
 		temp[i] = arr[i];
-		i++;
 		stack = stack->next;
+		i++;
 	}
+	//printf("size: %d\n", lst_size);
 	bubble_sort(temp, lst_size);
+	//print_arr(temp, lst_size);
 	i = 0;
 	while (i < lst_size)
 	{
@@ -189,11 +193,18 @@ int	*simplify_nums(t_list *stack)
 		while (j < lst_size)
 		{
 			if (arr[i] == temp[j])
+			{
 				arr[i] = j;
+				// printf("arr[%d] = %d\n", arr[i], j);
+				// printf("j = %d temp[%d] = %d\n", j, j, temp[j]);
+			}
 			j++;
 		}
 		i++;
 	}
+	// printf("--------------\n");
+	// printf("arr simpl: \n");
+	//print_arr(arr, lst_size);
 	return(arr);
 }
 
@@ -206,13 +217,16 @@ void	big_sort(t_list *stack_a, t_list *stack_b)
 	int	*arr;
 	int	j;
 	int	num;
+	t_list	*new_stack_a = NULL;
 
 	i = 0;
 	arr = simplify_nums(stack_a);
 	max_bits = 0;
 	size = ft_lstsize(stack_a);
 	max = size - 1;
-	copytolist(arr, stack_a, size);
+	new_stack_a = copytolist(arr, size);
+	//print_arr(arr, size);
+	//print_list(new_stack_a);
 	while ((max >> max_bits) != 0)
 		++max_bits;
 	while (i < max_bits)
@@ -220,17 +234,18 @@ void	big_sort(t_list *stack_a, t_list *stack_b)
 		j = 0;
 		while (j < size)
 		{
-			num = stack_a->content;
-			if ((num >> i)&(1 == 1))
-				rotate(&stack_a, 'A');
+			num = new_stack_a->content;
+			if ((num >> i)&1)
+				rotate(&new_stack_a, 'a');
 			else
-				push(&stack_a, &stack_b, 'A');
+				push(&new_stack_a, &stack_b, 'b');
 			j++;
 		}
+		while (stack_b != NULL)
+			push(&stack_b, &new_stack_a, 'a');
 		i++;
 	}
-	while (stack_b == NULL)
-		push(&stack_b, &stack_a, 'B');
+	//print_list(new_stack_a);
 }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
@@ -253,37 +268,33 @@ int main(int argc, char **argv)
 	t_list	*stack_a;
 	int		i;
 	t_list	*stack_b;
-	char	**arg;
 
 	stack_a = NULL;
 	stack_b = NULL;
-	arg = NULL;
-	// printf("im here");
-	// if (argc == 2)
-	// {
-	// 	i = 0;
-	// 	while (*arg[i])
-	// 	{
-	// 		//ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(arg[i])));
-	// 		i++;
-	// 	}
-	// }
-	// else
-	// {
-		i = 1;
-		while (i < argc)
-		{
+	i = 1;
+	while (i < argc)
+	{
+		if (checker(argv[i]) && check_dups(argv[i]))
 			ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
-			i++;
+		else
+		{
+			write (2, "Error\n", 6);
+			return (0);
 		}
-	//}
-	if (argc == 6 || argc == 5)
-		mapping(stack_a, stack_b);
-	else if (argc == 4)
-		sort_3(&stack_a);
-	else if (argc > 6)
-		big_sort(stack_a, stack_b);
+		i++;
+	}
+	if (argc > 2)
+	{
+		if (argc == 6)
+			sort_5(stack_a, stack_b);
+		else if (argc == 5)
+			sort_4(stack_a, stack_b);
+		else if (argc == 4)
+			sort_3(&stack_a); 
+		else if (argc > 6)
+			big_sort(stack_a, stack_b);
+	}
 	else
-		write(2, "Error\n", 6);
+		write (2, "Error\n", 6);
     return (0);
 }
