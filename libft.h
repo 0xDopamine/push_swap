@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:43:32 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/11 18:38:16 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/19 22:22:11 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,10 @@ t_list			*ft_lstlast(t_list *lst);
 int				ft_lstsize(t_list *lst);
 void			ft_lstdelone(t_list *lst, void (*del)(void *));
 void			ft_lstiter(t_list *lst, void (*f)(void *));
-t_list			*ft_lstmap(t_list *lst, void *(*f)(void *),
-					void (*del)(void *));
+t_list			*ft_lstmap(t_list *lst, void *(*f)(void *));
+int	checker(char *argv);
+int	check_dups(char *argv);
+void	sort_4(t_list *stack_a, t_list *stack_b);
 void	sort_5(t_list *stack_a, t_list *stack_b);
 void			swap (t_list *stack, char which);
 void			rotate(t_list **stack, char which);
