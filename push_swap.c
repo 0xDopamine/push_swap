@@ -6,264 +6,36 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/19 22:22:33 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/25 18:07:03 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdlib.h>
-#include "libft.h"
+#include "push_swap.h"
 
-static int	calres(const char *str, int i, int sign)
+void	push_swap(t_list *stack_a, t_list *stack_b, int argc)
 {
-	long	temp;
-	long	res;
-
-	temp = 0;
-	res = 0;
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	if (!(issorted(copytoarray(stack_a), ft_lstsize(stack_a))))
 	{
-		temp = (temp * 10) + (str[i] - '0');
-		if (temp < res && sign == -1)
-			return (0);
-		if (temp < res && sign == 1)
-			return (-1);
-		res = (res * 10) + (str[i] - '0');
-		i++;
-	}
-	return (res * sign);
-}
-
-int	ft_atoi(const char *str)
-{
-	int		i;
-	long	res;
-	int		sign;
-
-	sign = 1;
-	res = 0;
-	i = 0;
-	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
-		i++;
-	if (str[i] && (str[i] == '+' || str[i] == '-'))
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	return (calres(str, i, sign));
-}
-
-t_list	*ft_lstlast(t_list *lst)
-{
-	if (lst == NULL)
-		return (lst);
-	while (lst->next)
-		lst = lst->next;
-	return (lst);
-}
-
-t_list	*ft_lstnew(int content)
-{
-	t_list	*lst;
-
-	lst = (t_list *)malloc(sizeof(t_list));
-	if (!lst)
-		return (NULL);
-	lst->content = content;
-	lst->next = NULL;
-	return (lst);
-}
-
-void	ft_lstadd_front(t_list **lst, t_list *new)
-{
-	if (*lst == NULL && new == NULL)
-		return ;
-	if (new == NULL)
-		return ;
-	new->next = *lst;
-	*lst = new;
-}
-
-void	sort_3(t_list **stack)
-{
-	int		min;
-	int		max;
-	t_list	*temp;
-
-	temp = *stack;
-	min = get_min(*stack);
-	max = get_max(*stack);
-	if (temp->next->content == min && ft_lstlast(temp)->content == max)
-		swap(*stack, 'a');
-	else if (temp->content == max && ft_lstlast(temp)->content == min)
-	{
-		swap(*stack, 'a');
-		reverse_rotate(stack, 'a');
-	}
-	else if (temp->content == max && temp->next->content == min)
-		rotate(stack, 'a');
-	else if (temp->content == min && temp->next->content == max)
-	{
-		swap(*stack, 'a');
-		rotate(stack, 'a');
-	}
-	else if (temp->next->content == max && ft_lstlast(temp)->content == min)
-		reverse_rotate(stack, 'a');
-	else
-		return ;
-}
-
-void	print_arr(int *arr, int size)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		printf("%d\n", arr[i]);
-		i++;
-	}
-}
-
-void	bubble_sort(int *arr, int size)
-{
-	int	i;
-	int	j;
-	int	temp;
-
-	i = 0;
-	while (i < size - 1)
-	{
-		j = 0;
-		while (j < size - i - 1)
+		if (argc)
 		{
-			if (arr[j] > arr[j + 1])
-			{
-				temp = arr[j];
-				arr[j] = arr[j + 1];
-				arr[j + 1] = temp;
-			}
-			j++;
-		}
-		i++;
-	}
-}
-
-t_list	*copytolist(int *arr, int size)
-{
-	int	i;
-	t_list *stack;
-
-	i = 0;
-	while (i < size)
-	{
-		ft_lstadd_back(&stack, ft_lstnew(arr[i]));
-		i++;
-	}
-	return (stack);
-}
-
-int	*simplify_nums(t_list *stack)
-{
-	int	lst_size;
-	int	*arr;
-	int	i;
-	int	j;
-	int	*temp;
-
-	i = 0;
-	lst_size = ft_lstsize(stack);
-	arr = malloc(sizeof(int) * lst_size);
-	temp = malloc(sizeof(int) * lst_size);
-	while (stack)
-	{
-		arr[i] = stack->content;
-		temp[i] = arr[i];
-		stack = stack->next;
-		i++;
-	}
-	//printf("size: %d\n", lst_size);
-	bubble_sort(temp, lst_size);
-	//print_arr(temp, lst_size);
-	i = 0;
-	while (i < lst_size)
-	{
-		j = 0;
-		while (j < lst_size)
-		{
-			if (arr[i] == temp[j])
-			{
-				arr[i] = j;
-				// printf("arr[%d] = %d\n", arr[i], j);
-				// printf("j = %d temp[%d] = %d\n", j, j, temp[j]);
-			}
-			j++;
-		}
-		i++;
-	}
-	// printf("--------------\n");
-	// printf("arr simpl: \n");
-	//print_arr(arr, lst_size);
-	return(arr);
-}
-
-void	big_sort(t_list *stack_a, t_list *stack_b)
-{
-	int	size;
-	int	max;
-	int	max_bits;
-	int	i;
-	int	*arr;
-	int	j;
-	int	num;
-	t_list	*new_stack_a = NULL;
-
-	i = 0;
-	arr = simplify_nums(stack_a);
-	max_bits = 0;
-	size = ft_lstsize(stack_a);
-	max = size - 1;
-	new_stack_a = copytolist(arr, size);
-	//print_arr(arr, size);
-	//print_list(new_stack_a);
-	while ((max >> max_bits) != 0)
-		++max_bits;
-	while (i < max_bits)
-	{
-		j = 0;
-		while (j < size)
-		{
-			num = new_stack_a->content;
-			if ((num >> i)&1)
-				rotate(&new_stack_a, 'a');
+			if (argc == 6)
+				sort_5(stack_a, stack_b);
+			else if (argc == 5)
+				sort_4(stack_a, stack_b);
+			else if (argc == 4)
+				sort_3(&stack_a);
+			else if (argc > 6)
+				big_sort(stack_a, stack_b);
+			else if (argc == 2 || argc == 1)
+				return ;
 			else
-				push(&new_stack_a, &stack_b, 'b');
-			j++;
+				write (2, "Error\n", 6);
 		}
-		while (stack_b != NULL)
-			push(&stack_b, &new_stack_a, 'a');
-		i++;
 	}
-	//print_list(new_stack_a);
+	return ;
 }
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
-{
-	t_list	*last;
-
-	if (new == NULL)
-		return ;
-	if (*lst == NULL)
-	{
-		ft_lstadd_front(lst, new);
-		return ;
-	}
-	last = ft_lstlast(*lst);
-	last->next = new;
-}
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_list	*stack_a;
 	int		i;
@@ -274,8 +46,11 @@ int main(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (checker(argv[i]) && check_dups(argv[i]))
-			ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
+		if (ft_atoi_tester(argv[i]))
+		{
+			if (check_dups(argv, argc) && checker(argv[i]))
+				ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
+		}
 		else
 		{
 			write (2, "Error\n", 6);
@@ -283,18 +58,6 @@ int main(int argc, char **argv)
 		}
 		i++;
 	}
-	if (argc > 2)
-	{
-		if (argc == 6)
-			sort_5(stack_a, stack_b);
-		else if (argc == 5)
-			sort_4(stack_a, stack_b);
-		else if (argc == 4)
-			sort_3(&stack_a); 
-		else if (argc > 6)
-			big_sort(stack_a, stack_b);
-	}
-	else
-		write (2, "Error\n", 6);
-    return (0);
+	push_swap(stack_a, stack_b, argc);
+	return (0);
 }
