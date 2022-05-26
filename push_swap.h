@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:43:32 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/25 18:27:39 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:17:22 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,7 @@ void			bubble_sort(int *arr, int size);
 int				*copytoarray(t_list *stack);
 int				*simplify_nums(t_list *stack);
 t_list			*copytolist(int *arr, int size);
+int				*connecting(t_data data);
+void			box_0(t_list *stack_a, t_list *stack_b, t_data data);
+void			box_1(t_list *stack_a, t_list *stack_b, t_data data);
 #endif

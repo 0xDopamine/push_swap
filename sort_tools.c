@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:21:16 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/25 18:42:19 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/26 20:21:59 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ void	big_sort(t_list *stack_a, t_list *stack_b)
 	t_data	data;
 	t_list	*new_stack_a;
 
-	data.i = 0;
+	data.i = -1;
 	data.size_a = 0;
 	data.size_b = 0;
 	data.arr = simplify_nums(stack_a);
@@ -155,23 +155,24 @@ void	big_sort(t_list *stack_a, t_list *stack_b)
 	new_stack_a = copytolist(data.arr, ft_lstsize(stack_a));
 	while ((data.max >> data.max_bits) != 0)
 		data.max_bits++;
-	data.size_a = ft_lstsize(new_stack_a);
-	while (data.i++ < data.max_bits)
+	while (++data.i < data.max_bits)
 	{
-		data.j = 0;
+		data.j = -1;
 		data.size_a = ft_lstsize(new_stack_a);
-		while (data.j++ < data.size_a)
+		while (++data.j < data.size_a)
 		{
 			data.num_a = new_stack_a->content;
 			if ((data.num_a >> data.i) & 1)
 				rotate(&new_stack_a, 'a');
-			else if (((data.num_a >> data.i) & 1) == 0)
+			else
 				push(&new_stack_a, &stack_b, 'b');
+			//data.j++;
+			//box_1(new_stack_a, stack_b, data);
 		}
 		data.j = 0;
 		data.size_b = ft_lstsize(stack_b);
-		while (data.j++ < data.size_b
-			&& (!issorted(copytoarray(new_stack_a), data.size_a)))
+		while (data.j < data.size_b
+			/*&& (!issorted(copytoarray(new_stack_a), data.size_a))*/)
 		{
 			if ((stack_b != NULL
 					&& (!issorted(copytoarray(new_stack_a), data.size_a))))
@@ -179,11 +180,12 @@ void	big_sort(t_list *stack_a, t_list *stack_b)
 				data.num_b = stack_b->content;
 				if ((data.num_b >> (data.i + 1)) & 1)
 					push(&stack_b, &new_stack_a, 'a');
-				else if (((data.num_b >> (data.i + 1)) & 1) == 0)
+				else
 					rotate (&stack_b, 'b');
 			}
 			else
 				break ;
+			data.j++;
 		}
 		if ((issorted_rev(copytoarray(stack_b), data.size_b))
 			&& (issorted(copytoarray(new_stack_a), data.size_a)))

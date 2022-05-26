@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:32:16 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/25 18:53:54 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:56:34 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,40 +52,6 @@ int	ft_atoi(const char *str)
 	return (calres(str, i, sign));
 }
 
-int	*simplify_nums(t_list *stack)
-{
-	t_data	data;
-	int		*temp;
-
-	data.i = 0;
-	data.size = ft_lstsize(stack);
-	data.arr = malloc(sizeof(int) * data.size);
-	temp = malloc(sizeof(int) * data.size);
-	while (stack)
-	{
-		data.arr[data.i] = stack->content;
-		temp[data.i] = data.arr[data.i];
-		stack = stack->next;
-		data.i++;
-	}
-	bubble_sort(temp, data.size);
-	data.i = 0;
-	while (data.i++ < data.size)
-	{
-		data.j = 0;
-		while (data.j++ < data.size)
-		{
-			if (data.arr[data.i] == temp[data.j]
-				&& data.j != data.arr[data.i] && data.i != temp[data.j])
-			{
-				data.arr[data.i] = data.j;
-				break ;
-			}
-		}
-	}
-	return (data.arr);
-}
-
 int	issorted(int *arr, int size)
 {
 	t_data	data;
@@ -101,11 +67,11 @@ int	issorted(int *arr, int size)
 		data.j = 0;
 		while (data.j++ < size - data.i - 1)
 		{
-			if (arr[data.j++] > data.arr[data.j + 1])
+			if (arr[data.j] > arr[data.j + 1])
 			{
-				temp = data.arr[data.j];
-				data.arr[data.j] = data.arr[data.j + 1];
-				data.arr[data.j + 1] = temp;
+				temp = arr[data.j];
+				arr[data.j] = arr[data.j + 1];
+				arr[data.j + 1] = temp;
 				test = 0;
 			}
 		}

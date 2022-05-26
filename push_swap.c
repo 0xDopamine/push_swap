@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/25 18:07:03 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/26 17:00:20 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	push_swap(t_list *stack_a, t_list *stack_b, int argc)
 	{
 		if (argc)
 		{
-			if (argc == 6)
+			if (argc == 6)	
 				sort_5(stack_a, stack_b);
 			else if (argc == 5)
 				sort_4(stack_a, stack_b);
