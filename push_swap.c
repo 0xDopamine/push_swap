@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/11 19:45:06 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/28 18:16:58 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/28 20:04:22 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ int	main(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (ft_atoi_tester(argv[i]))
-		{
-			if (check_dups(argv, argc) && checker(argv[i]))
-				ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
-		}
+		if (ft_atoi_tester(argv[i])
+			&& check_dups(argv, argc) && checker(argv[i]))
+			ft_lstadd_back(&stack_a, ft_lstnew(ft_atoi(argv[i])));
 		else
 		{
 			write (2, "Error\n", 6);

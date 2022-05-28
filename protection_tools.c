@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:24:23 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/24 20:56:20 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/28 20:05:19 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ int	checker(char *str)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	while (str[i])
 	{
-		if (str[i] >= '0' && str[i] <= '9')
+		if (str[i] <= '9' && str[i] >= '0')
 			i++;
 		else
 			return (0);
