@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:43:32 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/26 17:17:22 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/28 18:25:00 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ typedef struct s_data
 	int	j;
 	int	num_a;
 	int	num_b;
+	int	first;
+	int	middle;
+	int	last;
 }	t_data;
 
 int				ft_atoi(const char *str);
@@ -112,6 +115,7 @@ int				*copytoarray(t_list *stack);
 int				*simplify_nums(t_list *stack);
 t_list			*copytolist(int *arr, int size);
 int				*connecting(t_data data);
-void			box_0(t_list *stack_a, t_list *stack_b, t_data data);
-void			box_1(t_list *stack_a, t_list *stack_b, t_data data);
+void			radix(t_data data, t_list *stack_a, t_list *stack_b);
+void			sort_4_half(t_list *stack_a, t_list *stack_b, t_data data);
+void			sort_5_half(t_list *stack_a, t_list *stack_b, t_data data);
 #endif

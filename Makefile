@@ -2,7 +2,7 @@ CC = cc
 
 CFLAGS = -Wall -Werror -Wextra
 
-SRCS = push_swap.c tools.c tools_2.c lists_tools.c lists_tools_2.c protection_tools.c instructions.c sort_tools.c
+SRCS = push_swap.c tools.c tools_2.c lists_tools.c lists_tools_2.c protection_tools.c instructions.c small_sort_tools.c sort_tools.c big_sort_tools.c
 
 PUSH_SWAP_H = push_swap.h 
 

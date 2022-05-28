@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:26:22 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/24 20:29:25 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/28 18:26:45 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,26 @@ int	*copytoarray(t_list *stack)
 	}
 	return (arr);
 }
+// void	print_arr(int *arr, int size)
+// {
+// 	int	i;
 
-void	print_list(t_list *stack)
-{
-	while (stack != NULL)
-	{
-		printf("%d\n", stack->content);
-		stack = stack->next;
-	}
-}
+// 	i = 0;
+// 	while (i < size)
+// 	{
+// 		printf("%d\n", arr[i]);
+// 		i++;
+// 	}
+// }
+
+// void	print_list(t_list *stack)
+// {
+// 	while (stack != NULL)
+// 	{
+// 		printf("%d\n", stack->content);
+// 		stack = stack->next;
+// 	}
+// }
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {

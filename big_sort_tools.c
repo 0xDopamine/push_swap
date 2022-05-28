@@ -6,32 +6,57 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 17:07:28 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/26 20:12:04 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:39:16 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	box_1(t_list *stack_a, t_list *stack_b, t_data data)
+void	big_sort(t_list *stack_a, t_list *stack_b)
 {
-	data.num_a = stack_a->content;
-	if ((data.num_a >> data.i) & 1)
-		rotate(&stack_a, 'a');
-	else
-		push(&stack_a, &stack_b, 'b');
+	t_data	data;
+	t_list	*new_stack_a;
+
+	data.i = -1;
+	data.size_a = 0;
+	data.size_b = 0;
+	data.arr = simplify_nums(stack_a);
+	data.max_bits = 0;
+	new_stack_a = NULL;
+	data.max = ft_lstsize(stack_a) - 1;
+	new_stack_a = copytolist(data.arr, ft_lstsize(stack_a));
+	while ((data.max >> data.max_bits) != 0)
+		data.max_bits++;
+	radix(data, new_stack_a, stack_b);
 }
 
-void	box_0(t_list *stack_a, t_list *stack_b, t_data data)
+void	radix(t_data data, t_list *stack_a, t_list *stack_b)
 {
-	if ((stack_b != NULL
-			&& (!issorted(copytoarray(stack_a), data.size_a))))
+	while (++data.i < data.max_bits)
 	{
-		data.num_b = stack_b->content;
-		if ((data.num_b >> (data.i + 1)) & 1)
-			push(&stack_b, &stack_a, 'a');
-		else if (((data.num_b >> (data.i + 1)) & 1) == 0)
-			rotate (&stack_b, 'b');
+		data.j = -1;
+		data.size_a = ft_lstsize(stack_a);
+		while (++data.j < data.size_a)
+		{
+			data.num_a = stack_a->content;
+			if ((data.num_a >> data.i) & 1)
+				rotate(&stack_a, 'a');
+			else
+				push(&stack_a, &stack_b, 'b');
+		}
+		data.j = -1;
+		data.size_b = ft_lstsize(stack_b);
+		while (++data.j < data.size_b && stack_b)
+		{
+			data.num_b = stack_b->content;
+			if ((data.num_b >> (data.i + 1)) & 1)
+				push(&stack_b, &stack_a, 'a');
+			else
+				rotate (&stack_b, 'b');
+		}
 	}
+	while (stack_b)
+		push(&stack_b, &stack_a, 'a');
 }
 
 int	*connecting(t_data data)
@@ -45,8 +70,7 @@ int	*connecting(t_data data)
 		data.j = 0;
 		while (data.j < data.size)
 		{
-			if (data.arr[data.i] == temp[data.j]
-				/*&& data.j != data.arr[data.i] && data.i != temp[data.j]*/)
+			if (data.arr[data.i] == temp[data.j])
 			{
 				data.arr[data.i] = data.j;
 				break ;

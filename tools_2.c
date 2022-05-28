@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:32:16 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/26 17:56:34 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/28 18:16:54 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,14 @@ int	issorted(int *arr, int size)
 	int		temp;
 	int		test;
 
-	data.i = 0;
+	data.i = -1;
 	test = 1;
 	if (size < 3)
 		return (0);
-	while (data.i++ < size - 1)
+	while (++data.i < size - 1)
 	{
-		data.j = 0;
-		while (data.j++ < size - data.i - 1)
+		data.j = -1;
+		while (++data.j < size - data.i - 1)
 		{
 			if (arr[data.j] > arr[data.j + 1])
 			{
