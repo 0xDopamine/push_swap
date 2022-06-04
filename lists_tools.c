@@ -6,11 +6,18 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:26:22 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/28 20:04:08 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:22:19 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+void	freethis(void **ptr)
+{
+	while(*ptr++)
+		free(*ptr);
+	ptr = NULL;
+}
 
 int	ft_lstsize(t_list *lst)
 {
@@ -56,14 +63,29 @@ int	*copytoarray(t_list *stack)
 // 	}
 // }
 
-// void	print_list(t_list *stack)
-// {
-// 	while (stack != NULL)
-// 	{
-// 		printf("%d\n", stack->content);
-// 		stack = stack->next;
-// 	}
-// }
+void	print_list(t_list *stack)
+{
+	while (stack != NULL)
+	{
+		printf("%d\n", stack->content);
+		stack = stack->next;
+	}
+}
+
+void	ft_lstclear(t_list **lst)
+{
+	t_list	*curr;
+	t_list	*next;
+
+	curr = *lst;
+	while (curr)
+	{
+		next = curr->next;
+		free(curr);
+		curr = next;
+	}
+	*lst = NULL;
+}
 
 void	ft_lstadd_back(t_list **lst, t_list *new)
 {

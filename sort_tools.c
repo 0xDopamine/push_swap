@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:21:16 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/28 18:23:49 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/31 20:24:07 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,24 @@ void	sort_3(t_list **stack)
 	{
 		swap(*stack, 'a');
 		reverse_rotate(stack, 'a');
+		ft_lstclear(stack);
 	}
 	else if (data.first == data.max && data.middle == data.min)
+	{
 		rotate(stack, 'a');
+		ft_lstclear(stack);
+	}
 	else if (data.first == data.min && data.middle == data.max)
 	{
 		swap(*stack, 'a');
 		rotate(stack, 'a');
+		ft_lstclear(stack);
 	}
 	else if (data.middle == data.max && data.last == data.min)
+	{
 		reverse_rotate(stack, 'a');
+		ft_lstclear(stack);
+	}
 }
 
 void	sort_4(t_list *stack_a, t_list *stack_b)

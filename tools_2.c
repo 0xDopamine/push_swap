@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:32:16 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/28 18:16:54 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/30 20:32:29 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,13 @@ int	issorted(int *arr, int size)
 		}
 	}
 	return (test);
+}
+
+int	ft_issorted(t_list *head)
+{
+	if (head == NULL || head->next == NULL)
+		return (1);
+	return (head->content < head->next->content && ft_issorted(head->next));
 }
 
 int	issorted_rev(int *arr, int size)

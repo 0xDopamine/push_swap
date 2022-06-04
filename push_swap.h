@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:43:32 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/28 18:25:00 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/31 19:55:12 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
+#include "./memwatch-2.71/memwatch.h"
 
 typedef struct s_list
 {
@@ -41,6 +42,7 @@ typedef struct s_data
 	int	last;
 }	t_data;
 
+int	ft_issorted(t_list *head);
 int				ft_atoi(const char *str);
 int				calres(const char *str, int i, int sign);
 void			ft_bzero(void *s, size_t n);
@@ -79,7 +81,7 @@ void			ft_putendl_fd(char *s, int fd);
 void			ft_putnbr_fd(int n, int fd);
 t_list			*ft_lstnew(int content);
 void			ft_lstadd_front(t_list **lst, t_list *new);
-void			ft_lstclear(t_list **lst, void (*del)(void *));
+void			ft_lstclear(t_list **lst);
 void			ft_lstadd_back(t_list **lst, t_list *new);
 t_list			*ft_lstlast(t_list *lst);
 int				ft_lstsize(t_list *lst);
