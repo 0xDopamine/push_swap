@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:29:39 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/31 20:12:28 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/06/06 20:36:44 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ t_list	*ft_lstlast(t_list *lst)
 
 t_list	*ft_lstnew(int content)
 {
-	t_list *lst;
+	t_list	*lst;
 
 	lst = (t_list *)malloc(sizeof(t_list));
 	if (!lst)

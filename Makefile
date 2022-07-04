@@ -1,6 +1,6 @@
-CC = cc
+CC = gcc
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address -g
 
 SRCS = push_swap.c tools.c tools_2.c lists_tools.c lists_tools_2.c protection_tools.c instructions.c small_sort_tools.c sort_tools.c big_sort_tools.c
 
@@ -17,7 +17,8 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	rm -f $(BONUS)
 	ar rc $(NAME) $(OBJS) $(PUSH_SWAP_A) $(PUSH_SWAP_H)
-	$(CC) $(CFLAGS) $(NAME) -o push_swap
+#$(CC) $(CFLAGS) $(SRCS) -w -DMEMWATCH -DMW_STDIO memwatch-2.71/memwatch.c  -o push_swap && rm -rf memwatch.log
+	$(CC) $(CFLAGS) $(NAME)  -o push_swap
 
 re: fclean all
 

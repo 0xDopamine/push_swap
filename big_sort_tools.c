@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/26 17:07:28 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/06/04 17:41:13 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/05/27 17:39:16 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	big_sort(t_list *stack_a, t_list *stack_b)
 	new_stack_a = copytolist(data.arr, ft_lstsize(stack_a));
 	while ((data.max >> data.max_bits) != 0)
 		data.max_bits++;
-	free(data.arr);
-	ft_lstclear(&stack_a);
 	radix(data, new_stack_a, stack_b);
 }
 
@@ -59,7 +57,6 @@ void	radix(t_data data, t_list *stack_a, t_list *stack_b)
 	}
 	while (stack_b)
 		push(&stack_b, &stack_a, 'a');
-	ft_lstclear(&stack_a);
 }
 
 int	*connecting(t_data data)
@@ -82,7 +79,6 @@ int	*connecting(t_data data)
 		}
 		data.i++;
 	}
-	free(temp);
 	return (data.arr);
 }
 
@@ -103,6 +99,5 @@ int	*simplify_nums(t_list *stack)
 		data.i++;
 	}
 	bubble_sort(temp, data.size);
-	free(temp);
 	return (connecting(data));
 }

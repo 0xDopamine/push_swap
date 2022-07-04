@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/25 15:43:32 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/31 19:55:12 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/06/12 22:52:58 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
-#include "./memwatch-2.71/memwatch.h"
 
 typedef struct s_list
 {
@@ -42,7 +41,7 @@ typedef struct s_data
 	int	last;
 }	t_data;
 
-int	ft_issorted(t_list *head);
+int				ft_issorted(t_list *head);
 int				ft_atoi(const char *str);
 int				calres(const char *str, int i, int sign);
 void			ft_bzero(void *s, size_t n);
@@ -96,7 +95,7 @@ void			rotate_rotate(t_list **stack_a, t_list **stack_b);
 int				issorted(int *arr, int size);
 int				issorted_rev(int *arr, int size);
 int				*copytoarray(t_list *stack);
-void			sort_3(t_list **stack);
+void			sort_3(t_list **stack, t_data data);
 void			sort_4(t_list *stack_a, t_list *stack_b);
 void			sort_5(t_list *stack_a, t_list *stack_b);
 void			swap(t_list *stack, char which);
@@ -107,7 +106,6 @@ int				get_min(t_list *stack);
 int				get_max(t_list *stack);
 int				ft_lstsize(t_list *lst);
 void			print_arr(int *arr, int size);
-void			sort_3(t_list **stack);
 void			print_list(t_list *stack);
 int				get_min_index(t_list *stack);
 int				get_max_index(t_list *stack);

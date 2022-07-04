@@ -6,7 +6,7 @@
 /*   By: mbaioumy <mbaioumy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 20:21:16 by mbaioumy          #+#    #+#             */
-/*   Updated: 2022/05/31 20:24:07 by mbaioumy         ###   ########.fr       */
+/*   Updated: 2022/06/12 22:50:44 by mbaioumy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,41 +36,33 @@ void	bubble_sort(int *arr, int size)
 	}
 }
 
-void	sort_3(t_list **stack)
+void	sort_3(t_list **stack, t_data data)
 {
-	t_data	data;
-	t_list	*temp;
-
-	temp = *stack;
 	data.min = get_min(*stack);
 	data.max = get_max(*stack);
-	data.first = temp->content;
-	data.middle = temp->next->content;
-	data.last = ft_lstlast(temp)->content;
+	data.first = (*stack)->content;
+	data.middle = (*stack)->next->content;
+	data.last = ft_lstlast(*stack)->content;
 	if (data.middle == data.min && data.last == data.max)
-		swap(*stack, 'a');
-	else if (data.first == data.max && data.last == data.min)
 	{
+		swap(*stack, 'a');
+		return ;
+	}
+	else if (data.first == data.max && data.last == data.min)
+	{	
 		swap(*stack, 'a');
 		reverse_rotate(stack, 'a');
-		ft_lstclear(stack);
 	}
 	else if (data.first == data.max && data.middle == data.min)
-	{
 		rotate(stack, 'a');
-		ft_lstclear(stack);
-	}
 	else if (data.first == data.min && data.middle == data.max)
 	{
 		swap(*stack, 'a');
 		rotate(stack, 'a');
-		ft_lstclear(stack);
 	}
 	else if (data.middle == data.max && data.last == data.min)
-	{
 		reverse_rotate(stack, 'a');
-		ft_lstclear(stack);
-	}
+	ft_lstclear(stack);
 }
 
 void	sort_4(t_list *stack_a, t_list *stack_b)

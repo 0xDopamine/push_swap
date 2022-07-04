@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"name": "update1",
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"push_swap.h": "c",
+			"bitset": "c"
+		}
+	}
+}
